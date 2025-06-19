@@ -26,7 +26,7 @@ const signup = async (req, res) => {
     const emailSent = await sendMail({
         email: email,
         subject: "Verify your email",
-        message: `Click this link to verify your email: http://localhost:3000/api/userRoutes/verify/${token}`,
+        message: `Click this link to verify your email: ${process.env.BASE_URL}/api/userRoutes/verify/${token}`,
         html: "<b>This is a HTML email</b>"
     });
 
@@ -120,7 +120,7 @@ const forgotPassword = async (req, res) => {
     const emailSent = await sendMail({
         email: email,
         subject: "Reset your password",
-        message: `Click this link to reset your password: http://localhost:3000/reset-password/${token}`,
+        message: `Click this link to reset your password: ${process.env.BASE_URL}/api/reset-password/${token}`,
         html: "<b>This is a HTML email</b>"
     });
     if (emailSent) {
