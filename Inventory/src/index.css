@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+   padding: 0px;
+   box-sizing: border-box;
+   margin: 0px;
+   background-color: #fff;
+   font-family: 'Inter Tight', sans-serif;
+}
+
+.remove-scroll::-webkit-scrollbar {
+   display: none;
+}
+
+@layer utilities {
+   .background-color {
+      @apply bg-gradient-to-r from-violet-500 to-blue-700;
+      /* @apply bg-purple-600 */
+   }
+}
+
+.gradient-slide {
+   background: linear-gradient(90deg, #6b7280, #3b82f6, #8b5cf6, #ec4899, #f59e0b, #10b981, #6b7280);
+   background-size: 400% 400%;
+   animation: gradient-slide 3s ease-in-out infinite;
+   -webkit-background-clip: text;
+   -webkit-text-fill-color: transparent;
+   background-clip: text;
+}
+
+@keyframes gradient-slide {
+   0% {
+      background-position: 0% 50%;
+   }
+
+   50% {
+      background-position: 100% 50%;
+   }
+
+   100% {
+      background-position: 0% 50%;
+   }
+}
