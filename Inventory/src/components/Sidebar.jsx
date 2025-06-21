@@ -9,12 +9,13 @@ import { GlobalContext } from '../context/AppContext'
 
 const Sidebar = () => {
 
-  const { selectedOption, setIsLogin,userCredentials } = React.useContext(GlobalContext);
+  const { selectedOption, setIsLogin,userCredentials,setDarkMode } = React.useContext(GlobalContext);
 
   const navigate = useNavigate();
 
   const handleLogout = () => {
     setIsLogin(false);
+    setDarkMode(false);
     sessionStorage.clear();
   }
 

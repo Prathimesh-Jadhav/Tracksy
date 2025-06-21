@@ -11,14 +11,12 @@ const AppContext = ({ children }) => {
     name:sessionStorage.getItem('name') || '',
     email: sessionStorage.getItem('email') || '',
   });
-  const [darkMode, setDarkMode] = React.useState(localStorage.getItem('theme') === 'dark');
+  const [darkMode, setDarkMode] = React.useState(sessionStorage.getItem('theme') === 'dark');
   const [selectedOption, setSelectedOption] = React.useState(null);
   const [showLogin, setShowLogin] = useState(false);
   const [showSignup, setShowSignup] = useState(false);
   const [saleDetails, setSaleDetails] = useState(null);
   const [isLogin, setIsLogin] = useState(sessionStorage.getItem('token') ? true : false);
-  const[productsData, setProductsData] = useState([]);
-  const [salesData, setSalesData] = useState([]);
 
   const navigate = useNavigate();
 

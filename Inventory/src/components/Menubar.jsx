@@ -5,13 +5,15 @@ import { navOptions } from '../data/LandComments'
 import profile1 from '../assets/profile1.jpg'
 import { AiOutlineLogout } from "react-icons/ai";
 import { GlobalContext } from '../context/AppContext'
+import DarkModeToggle from './DarkModeToggle'
 
 const Menubar = ({ openMenu, setOpenMenu }) => {
 
-  const { setIsLogin,userCredentials } = React.useContext(GlobalContext);
+  const { setIsLogin, userCredentials, setDarkMode } = React.useContext(GlobalContext);
 
   const handleLogout = () => {
     setIsLogin(false);
+    setDarkMode(false);
     sessionStorage.clear();
   }
 
@@ -54,15 +56,22 @@ const Menubar = ({ openMenu, setOpenMenu }) => {
       </div>
 
       {/* Footer */}
-      <div className='flex items-center justify-start gap-2 mt-auto  w-full px-2'>
-        <div className='min-w-9 min-h-9 max-w-9 max-h-9 rounded-full border-2 overflow-hidden'> <img src={profile1} alt="" /></div>
-        <div className='flex flex-col items-start justify-center'>
-          <div className='text-sm text-gray-700 font-medium dark:text-white'>{userCredentials?.name}</div>
-          <div className='text-xs text-gray-500 break-all'>{userCredentials?.email}</div>
+      <div className='mt-auto flex flex-col justify-center '>
+        <div className='px-2 pl-3 py-2 flex justify-between items-baseline '>
+           <div className='text-sm text-gray-600 dark:text-white'>DarkMode</div>
+           <div><DarkModeToggle size={12}/></div>
         </div>
-        <div className='hover:cursor-pointer hover:bg-gray-200 rounded-full p-[4px] ml-3 bg-gray-200 dark:text-black' onClick={handleLogout}>
-          <AiOutlineLogout size={20} />
+        <div className='flex items-center border-gray-300 justify-start gap-2 border-t-[1px] dark:border-gray-600 w-full px-2 pt-1'>
+          <div className='min-w-9 min-h-9 max-w-9 max-h-9 rounded-full border-2 overflow-hidden'> <img src={profile1} alt="" /></div>
+          <div className='flex flex-col items-start justify-center'>
+            <div className='text-sm text-gray-700 font-medium dark:text-white'>{userCredentials?.name}</div>
+            <div className='text-xs text-gray-500 break-all'>{userCredentials?.email}</div>
+          </div>
+          <div className='hover:cursor-pointer hover:bg-gray-200 rounded-full p-[4px] ml-3 bg-gray-200 dark:text-black' onClick={handleLogout}>
+            <AiOutlineLogout size={20} />
+          </div>
         </div>
+
       </div>
 
 

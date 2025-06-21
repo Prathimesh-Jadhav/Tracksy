@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import { GlobalContext } from '../context/AppContext';
 import { Quantum } from 'ldrs/react'
 import 'ldrs/react/Quantum.css'
+import ForecastPeriodSelector from '../components/ForecastPeriodSelector';
 
 
 
@@ -20,6 +21,7 @@ const PurchaseListPage = () => {
   const [editingId, setEditingId] = useState(null);
   const [editValue, setEditValue] = useState('');
   const [loading, setLoading] = useState(false);
+    const [selectedPeriod, setSelectedPeriod] = useState('next-week');
 
   useEffect(() => {
     setSelectedOption('purchases');
@@ -27,7 +29,7 @@ const PurchaseListPage = () => {
     setTimeout(async () => {
       try {
         setLoading(true);
-        const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/salesForecast/next-week`,
+        const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/salesForecast/${selectedPeriod}`,
           { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } }
         );
         setProducts(response.data.results || []);
@@ -42,7 +44,7 @@ const PurchaseListPage = () => {
         console.error('Error fetching products:', error);
       }
     }, 100);
-  }, []);
+  }, [selectedPeriod]);
 
   useEffect(() => {
     if (!products || products.length === 0) return;
@@ -253,19 +255,24 @@ const PurchaseListPage = () => {
   return (
     <div className="w-full mx-auto md:p-6 max-md:p-4 bg-white md:max-h-[91vh] overflow-y-auto remove-scroll dark:bg-black dark:text-white">
       {/* Header */}
-      <div className="flex justify-between items-center mb-6 gap-4">
-        <div className="flex flex-col dark:text-white max-sm:max-w-[150px]">
+      <div className="md:flex max-md:grid grid-cols-1 justify-between items-center mb-6 gap-4">
+        <div className="flex flex-col dark:text-white max-md:w-full">
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Purchase List</h1>
           <p className="text-gray-600 text-sm dark:text-white break-all">AI-Recommended Products to Restock</p>
         </div>
-        <button
-          onClick={downloadCSV}
-          className="flex items-center space-x-2 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors"
-        >
-          <Download size={20}  className='max-md:hidden'/>
-          <span> Download CSV</span>
-          
-        </button>
+        <div className='grid md:grid-cols-2 max-md:grid-cols-1 items-center gap-4'>
+          <ForecastPeriodSelector onChange={(value) => setSelectedPeriod(value)} />
+
+          <button
+            onClick={downloadCSV}
+            className="flex items-center max-md:justify-center space-x-2 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors"
+          >
+            <Download size={20} />
+            <span> Download CSV</span>
+
+          </button>
+        </div>
+
       </div>
 
       {/* Table */}
@@ -274,12 +281,12 @@ const PurchaseListPage = () => {
           <table className="w-full">
             <thead className="bg-gray-50 border-b border-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
               <tr>
-                <th className="text-left py-3 px-4 font-semibold ">Product ID</th>
-                <th className="text-left py-3 px-4 font-semibold">Product Name</th>
-                <th className="text-right py-3 px-4 font-semibold ">Cost Price</th>
-                <th className="text-center py-3 px-4 font-semibold">Recommended Quantity</th>
-                <th className="text-right py-3 px-4 font-semibold">Total Price</th>
-                <th className="text-center py-3 px-4 font-semibold">Actions</th>
+                <th className="text-left py-3 px-4 font-medium text-sm ">Product ID</th>
+                <th className="text-left py-3 px-4 font-medium text-sm">Product Name</th>
+                <th className="text-right py-3 px-4 font-medium text-sm ">Cost Price</th>
+                <th className="text-center py-3 px-4 font-medium text-sm">Recommended Quantity</th>
+                <th className="text-right py-3 px-4 font-medium text-sm">Total Price</th>
+                <th className="text-center py-3 px-4 font-medium text-sm">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200 dark:divide-gray-500">
@@ -381,8 +388,12 @@ const PurchaseListPage = () => {
         </div>
       </div>
 
+      <div className="bg-yellow-100 text-yellow-800 border-l-4 border-yellow-500 p-4 rounded-md text-sm mt-4">
+        <strong>Note:</strong> Products with less than 2 days of sales data will show a recommended quantity of 0 due to forecast limitations.
+      </div>
+
       {/* Summary */}
-      <div className="mt-6 bg-gray-50 dark:bg-black dark:text-white dark:border rounded-lg p-4">
+      <div className="mt-6 bg-gray-50 dark:bg-black dark:text-white dark:border dark:border-gray-600 rounded-lg p-4">
         <div className="flex justify-between items-center">
           <span className="text-lg font-semibold">
             Total Products: {formattedProducts.length}

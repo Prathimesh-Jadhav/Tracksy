@@ -121,27 +121,36 @@ const Inventory = () => {
 
     //sub filters of products :
     useEffect(() => {
-        const handleSubFilters = (e) => {
-            const categories = new Set(new Array(...productsData.map(product => product.category)));
-            const prices = new Set(new Array(...productsData.map(product => product.sellingPrice)));
-            const sortedPrices = Array.from(prices).sort((a, b) => a - b);
-            const lastPrice = sortedPrices[sortedPrices.length - 1];
+        const handleSubFilters = () => {
+            console.log("productsData", productsData);
+
+            const categories = new Set(productsData.map(product => product.category));
+            console.log("categories", categories);
+
+            const prices = new Set(productsData.map(product => (product.sellingPrice)));
+            console.log("prices", prices);
+
+            const pricesArray = Array.from(prices).sort((a, b) => a - b);
+            const lastPrice = pricesArray[pricesArray.length - 1];
             let currentLastprice = 0;
 
             let pricesInRange = [];
 
-            while (currentLastprice < lastPrice) {
-                let lastPrice1 = `${currentLastprice}-${currentLastprice + 100}`;
-                pricesInRange.push(lastPrice1);
-                currentLastprice += 100;
-            }
+            // if (prices.size === 1) {
+            //     pricesInRange.push(`${currentLastprice}-${lastPrice}`);
+            // } else {
+                while (currentLastprice < lastPrice) {
+                    pricesInRange.push(`${currentLastprice}-${currentLastprice + 100}`);
+                    currentLastprice += 100;
+                }
+            // }
 
             setOptions({
                 'Category': Array.from(categories),
                 'Price': pricesInRange
-            })
+            });
+        };
 
-        }
         handleSubFilters();
     }, [productsData]);
 
@@ -214,7 +223,7 @@ const Inventory = () => {
                 else if (filterOption == 'Price') {
                     const price = selectedFilter.split('-');
                     filteredProducts = searchedProducts.filter((product) => {
-                        return product.price >= price[0] && product.price <= price[1];
+                        return product.sellingPrice >= price[0] && product.sellingPrice <= price[1];
                     })
                 }
             }
@@ -279,11 +288,11 @@ const Inventory = () => {
                 </div>
                 {/* Products List */}
                 < div className='w-full border dark:border-gray-600 p-2 rounded-lg grid grid-cols-[2fr,1fr,1fr,1fr,1fr] gap-4 mt-2 bg-gray-50 dark:bg-gray-900 mb-2 animate z-10'>
-                    <div><h3 className='text-md font-semibold text-gray-700 dark:text-white'>Product</h3></div>
-                    <div><h3 className='text-md font-semibold text-gray-700 dark:text-white max-md:hidden'>Selling Price</h3></div>
-                    <div><h3 className='text-md font-semibold text-gray-700 dark:text-white'>Items</h3></div>
-                    <div><h3 className='text-md font-semibold text-gray-700 dark:text-white max-md:hidden'>Last Purchased </h3></div>
-                    <div><h3 className='text-md font-semibold text-gray-700 dark:text-white flex justify-center'>Action</h3></div>
+                    <div><h3 className='text-md font-medium text-gray-700 dark:text-white'>Product</h3></div>
+                    <div><h3 className='text-md font-medium text-gray-700 dark:text-white max-md:hidden'>Selling Price</h3></div>
+                    <div><h3 className='text-md font-medium text-gray-700 dark:text-white'>Items</h3></div>
+                    <div><h3 className='text-md font-medium text-gray-700 dark:text-white max-md:hidden'>Last Purchased </h3></div>
+                    <div><h3 className='text-md font-medium text-gray-700 dark:text-white flex justify-center'>Action</h3></div>
                 </div>
 
             </div>

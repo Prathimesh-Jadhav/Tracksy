@@ -21,7 +21,7 @@ const Navbar = () => {
       </div>
       <div className='flex items-center gap-4'>
         <div className='max-md:hidden'>
-        <DarkModeToggle />
+        <DarkModeToggle size={14}/>
         </div>
         <div className='w-8 h-8 bg-gray-200 rounded-full overflow-hidden hover:cursor-pointer max-md:hidden'> <img src={Profile1} alt="" /></div>
         <div onClick={handleOpenMenu} className='dark:text-white text-gray-800'>

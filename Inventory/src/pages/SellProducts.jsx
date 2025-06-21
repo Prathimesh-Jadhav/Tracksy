@@ -254,11 +254,11 @@ const SellProducts = () => {
 
                         {/* products  */}
                         <div className='w-full max-h-[350px] overflow-y-auto remove-scroll animate'>
-                            <div className='border-t-[1px] border-b-[1px] mt-4 h-8 bg-gray-100 dark:bg-gray-800 dark:border-gray-600 grid md:grid-cols-[2fr,1fr,1fr,1fr] max-md:grid-cols-[1fr,1fr,1fr] px-2 gap-4'>
-                                <div className='flex justify-start items-center gap-2'>Product</div>
-                                <div className='flex justify-start items-center gap-2 max-md:hidden'>Price</div>
-                                <div className='flex justify-center items-center gap-2'>Quantity</div>
-                                <div className='flex justify-center items-center gap-2'>Action</div>
+                            <div className='border-t-[1px] border-b-[1px] mt-4 h-10 bg-gray-100 dark:bg-gray-800 dark:border-gray-600 grid md:grid-cols-[2fr,1fr,1fr,1fr] max-md:grid-cols-[1fr,1fr,1fr] px-2  gap-4'>
+                                <div className='flex justify-start items-center gap-2 font-medium'>Product</div>
+                                <div className='flex justify-start items-center gap-2 max-md:hidden font-medium'>Price</div>
+                                <div className='flex justify-center items-center gap-2 font-medium'>Quantity</div>
+                                <div className='flex justify-center items-center gap-2 font-medium'>Action</div>
                             </div>
                             {
                                 fetching ? <p className='text-md text-gray-700 dark:text-white self-center flex justify-center items-center p-4 rounded-lg bg-red-50 mt-2  w-full'>Fetching Products...</p> :

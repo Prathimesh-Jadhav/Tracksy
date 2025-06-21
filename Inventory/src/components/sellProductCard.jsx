@@ -37,7 +37,7 @@ const sellProductCard = ({ product, productsData, setSelectedItems, selectedItem
         <div className='w-full border dark:border-gray-600 rounded-lg mt-3 p-2 grid md:grid-cols-[2fr,1fr,1fr,1fr] max-md:grid-cols-[1fr,1fr,1fr] gap-4 sellProductCard animate' key={product.productId} data-index={product.productId}>
             {/* Product*/}
             <div className='flex justify-start items-center gap-2'>
-                <div className='max-w-11 max-h-11 min-w-11 min-h-11 rounded-xl border flex items-center justify-center max-md:hidden'><img src={`${import.meta.env.VITE_BASE_URL}/${product.image}` || product1} alt="" className='object-cover' /></div>
+                <div className='max-w-11 max-h-11 min-w-11 min-h-11 rounded-xl border flex items-center justify-center max-md:hidden overflow-hidden'><img src={`${import.meta.env.VITE_BASE_URL}/${product.image}` || product1} alt="" className='object-cover' /></div>
                 <div className='flex flex-col items-start justify-start'>
                     <p className='text-md break-all'>{product.productName}</p>
                     <div className='flex items-center justify-start gap-1'>

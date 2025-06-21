@@ -191,18 +191,18 @@ const Sales = () => {
 
             {/* sales list */}
             <div className='mt-10 min-h-[52vh] '>
-                <div className='h-10 bg-gray-100 dark:bg-gray-700 dark:text-gray-400 border-b-[1px] dark:border-gray-600 border-t-[1px] md:grid-cols-[1fr_1fr_1fr_1fr_1fr_1fr] grid grid-cols-[1fr_1fr_1fr] items-center justify-center text-gray-500 text-sm animate'>
-                    <div className='pl-2 max-md:hidden'>Sale ID</div>
-                    <div>Customer Name</div>
-                    <div className='max-md:text-center'>MobileNumber</div>
-                    <div className='max-md:hidden'>Sold Date</div>
-                    <div className='max-md:hidden'>Paid Amount</div>
-                    <div className='flex items-center gap-2 justify-center'>Action</div>
+                <div className='h-10 bg-gray-100 dark:bg-gray-700 dark:text-gray-200 border-b-[1px] dark:border-gray-600 border-t-[1px] md:grid-cols-[1fr_1fr_1fr_1fr_1fr_1fr] grid grid-cols-[1fr_1fr_1fr] items-center justify-center text-gray-800 text-sm animate'>
+                    <div className='pl-2 max-md:hidden font-medium'>Sale ID</div>
+                    <div className='max-md:text-center font-medium'>Customer Name</div>
+                    <div className='max-md:text-center font-medium'>MobileNumber</div>
+                    <div className='max-md:hidden font-medium'>Sold Date</div>
+                    <div className='max-md:hidden font-medium'>Paid Amount</div>
+                    <div className='flex items-center gap-2 justify-center font-medium'>Action</div>
                 </div>
 
                 {
                     loading ? (<div className='h-12 bg-gray-100 dark:bg-gray-700 dark:text-gray-400 flex items-center justify-center animate'>Fetching Products...</div>) :
-                        currentSales.length <= 0 ? <div className='h-12 bg-red-50 mt-2 text-gray-700 dark:text-gray-400 dark:border-gray-600 flex items-center justify-center animate'>No Sales Found</div> : currentSales.map((sale, index) => (
+                        currentSales.length <= 0 ? <div className='h-12 bg-red-50 mt-2 text-gray-700 dark:text-gray-700 dark:border-gray-600 flex items-center justify-center animate'>No Sales Found</div> : currentSales.map((sale, index) => (
                             <>
                             <div className='h-12 border-b-[1px] dark:border-gray-600 grid md:grid-cols-[1fr_1fr_1fr_1fr_1fr_1fr] max-md:grid-cols-[1fr_1fr_1fr] max-md:gap-4 items-center justify-center text-sm hover:bg-gray-50 dark:hover:bg-gray-700 hover:cursor-pointer animate' key={sale.saleID} onClick={moveSaleDetails} data-index={sale.saleID}>
                                 <div className='pl-2 max-md:hidden'>{sale.saleID}</div>

@@ -112,7 +112,7 @@ const AddProduct = ({ setShowAddProduct,productsData, showAddProduct, getAllProd
 
     return (
         <div className={`fixed inset-0 flex items-center justify-center backdrop-blur-sm z-50 bg-black bg-opacity-30 px-4 transition-all duration-300 ${showAddProduct ? 'opacity-100 visible' : 'opacity-0 invisible'}`}>
-            <div className={`max-w-[420px] max-md:min-w-[300px] md:min-w-[380px] max-h-[85vh] overflow-auto shadow-2xl border border-gray-200 bg-white dark:bg-gray-500 dark:border-gray-600 z-50 rounded-xl px-6 pb-6 transform transition-all duration-300 ${showAddProduct ? 'scale-100 translate-y-0' : 'scale-95 translate-y-4'}`}>
+            <div className={`max-w-[420px] max-md:min-w-[300px] md:min-w-[380px] max-h-[85vh] overflow-auto shadow-2xl border border-gray-200 bg-white dark:bg-gray-900 dark:border-gray-600 z-50 rounded-xl px-6 pb-6 transform transition-all duration-300 ${showAddProduct ? 'scale-100 translate-y-0' : 'scale-95 translate-y-4'}`}>
 
                 {/* Header Section */}
                 <div className='flex flex-col justify-start items-start py-6 border-b border-gray-100 dark:border-gray-600'>
@@ -128,7 +128,7 @@ const AddProduct = ({ setShowAddProduct,productsData, showAddProduct, getAllProd
                         <label className='text-sm font-medium text-gray-800 dark:text-gray-200'>Product Name *</label>
                         <input
                             type="text"
-                            className='w-full border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-700 dark:text-gray-200 text-sm bg-white dark:bg-gray-600 transition-all duration-200'
+                            className='w-full border border-gray-300 dark:border-gray-700 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-700 dark:text-gray-200 text-sm bg-white dark:bg-gray-600 transition-all duration-200'
                             placeholder='Enter product name'
                             required
                             name='productName'
@@ -296,7 +296,7 @@ const AddProduct = ({ setShowAddProduct,productsData, showAddProduct, getAllProd
                         </button>
                         <button
                             type="button"
-                            className='px-6 py-2.5 bg-gray-700 dark:bg-gray-800 text-white rounded-lg hover:bg-gray-800 dark:hover:bg-gray-900 transition-colors duration-200 font-medium shadow-md hover:shadow-lg'
+                            className='px-6 py-2.5 bg-gray-700 dark:bg-green-600 text-white rounded-lg hover:bg-gray-800 dark:hover:bg-gray-900 transition-colors duration-200 font-medium shadow-md hover:shadow-lg'
                             onClick={handleSubmit}
                         >
                             Add Product
