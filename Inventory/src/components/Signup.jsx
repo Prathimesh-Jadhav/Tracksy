@@ -13,7 +13,7 @@ import { toast } from 'react-toastify';
 
 const Signup = ({ showSignup, setShowSignup, setShowLogin }) => {
 
-    const { setUserCredentials,userCredentials,isLogin,setIsLogin } = React.useContext(GlobalContext);
+    const { setUserCredentials, userCredentials, isLogin, setIsLogin } = React.useContext(GlobalContext);
 
     // Added: State for form input
     const [formData, setFormData] = React.useState({
@@ -34,13 +34,15 @@ const Signup = ({ showSignup, setShowSignup, setShowLogin }) => {
                 googleLogin: true,
                 isVerified: true
             }
-            
-            if(sessionStorage.getItem('token') && sessionStorage.getItem('userId')) toast.error("User already logged in");
+
+            if (sessionStorage.getItem('token') && sessionStorage.getItem('userId')) toast.error("User already logged in");
 
             // Save user data to the database
             const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/userRoutes/googleLogin`, userData);
             sessionStorage.setItem('token', response.data.token);
             sessionStorage.setItem('userId', response.data.userId);
+            sessionStorage.setItem('name', userData.name);
+            sessionStorage.setItem('email', userData.email);
             toast.success("signup successful");
             setIsLogin(true);
             setShowSignup(false);
@@ -72,7 +74,7 @@ const Signup = ({ showSignup, setShowSignup, setShowLogin }) => {
         };
         console.log("Sending to backend:", user);
         // Here you'd send `user` to your backend
-        
+
         try {
             const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/userRoutes/signup`, user, {
                 headers: {
@@ -85,6 +87,8 @@ const Signup = ({ showSignup, setShowSignup, setShowLogin }) => {
                 name: response.data.name,
                 email: response.data.email,
             });
+            sessionStorage.setItem('name', response.data.name);
+            sessionStorage.setItem('email', response.data.email);
             setFormData({ name: '', email: '', password: '' });
             setShowSignup(false);
         }
