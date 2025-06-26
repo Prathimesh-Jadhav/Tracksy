@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useRevalidator } from 'react-router-dom'
 import { MdCancel } from "react-icons/md";
 import { FaGoogle } from "react-icons/fa";
@@ -15,6 +15,8 @@ const Login = ({ showLogin, setShowLogin, setShowSignup }) => {
 
     const { setUserCredentials, isLogin, setIsLogin } = React.useContext(GlobalContext);
     const [showForgotPassword, setShowForgotPassword] = React.useState(false);
+    const [loginButtonLoading, setLoginButtonLoading] = useState(false);
+    const [googleLoginLoading, setGoogleLoginLoading] = useState(false);
 
     // Added: state for form input
     const [formData, setFormData] = React.useState({
@@ -35,7 +37,10 @@ const Login = ({ showLogin, setShowLogin, setShowSignup }) => {
                 isVerified: true
             }
 
+            
             if(userData == null) return toast.error("No Data");
+            
+            setGoogleLoginLoading(true);
 
             const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/userRoutes/googleLogin`, userData, {
                 headers: {
@@ -65,6 +70,9 @@ const Login = ({ showLogin, setShowLogin, setShowSignup }) => {
                 console.error("Login failed:", error);
                 toast.error("Login failed");
             }
+        }
+        finally{
+            setGoogleLoginLoading(false);
         }
     };
 
@@ -96,6 +104,8 @@ const Login = ({ showLogin, setShowLogin, setShowSignup }) => {
         };
         console.log("Sending to backend:", user);
         // Here you'd send `user` to your backend
+
+        setLoginButtonLoading(true);
         try {
             const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/userRoutes/login`, user, {
                 headers: {
@@ -123,10 +133,14 @@ const Login = ({ showLogin, setShowLogin, setShowSignup }) => {
             }
 
         }
+        finally{
+            setLoginButtonLoading(false);
+        }
     }
 
     return (
         <div className={`max-w-[350px] mx-auto px-4 bg-white rounded-lg flex flex-col items-center justify-center py-2 min-w-[280px] z-20 transform shadow-xl  ${showLogin ? '' : 'hidden'} login-form transition-all duration-300 ease-in-out`}>
+                {googleLoginLoading && <div className='w-full flex items-center justify-center p-2 bg-red-200 rounded-lg'>Loading...</div>}
             <div className=' w-full flex items-center justify-between'>
                 <h1 className='text-2xl font-bold mt-2 text-gray-800'>Tracksy</h1>
                 <div onClick={() => setShowLogin(false)} className='text-gray-700 hover:text-gray-800'><MdCancel size={20} className='cursor-pointer' /></div>
@@ -159,7 +173,7 @@ const Login = ({ showLogin, setShowLogin, setShowSignup }) => {
                     </div>
                 )}
 
-                <button type='submit' className='bg-primary text-white py-2 px-4 rounded-lg w-full my-2 hover:bg-gray-800 '>Login</button>
+                <button type='submit' className='bg-primary text-white py-2 px-4 rounded-lg w-full my-2 hover:bg-gray-800 '>{loginButtonLoading ? 'Loading...' : 'Login'}</button>
                 <div className='text-secondary text-center mt-2 text-sm font-normal flex items-center justify-center gap-1'>Don't have an account? <div className='text-sm text-primary hover:text-gray-700 hover:cursor-pointer' onClick={() => { setShowLogin(false); setShowSignup(true) }}>Sign Up</div></div>
             </form>
 

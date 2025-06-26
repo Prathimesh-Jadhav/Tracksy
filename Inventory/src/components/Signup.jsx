@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { MdCancel } from "react-icons/md";
 import { FaGoogle } from "react-icons/fa";
@@ -14,6 +14,8 @@ import { toast } from 'react-toastify';
 const Signup = ({ showSignup, setShowSignup, setShowLogin }) => {
 
     const { setUserCredentials, userCredentials, isLogin, setIsLogin } = React.useContext(GlobalContext);
+    const [signupButtonLoading,setSignupButtonLoading] = useState(false);
+    const [googleSignupLoading,setGoogleSignupLoading] = useState(false);
 
     // Added: State for form input
     const [formData, setFormData] = React.useState({
@@ -34,6 +36,8 @@ const Signup = ({ showSignup, setShowSignup, setShowLogin }) => {
                 googleLogin: true,
                 isVerified: true
             }
+
+            setGoogleSignupLoading(true);
 
             if (sessionStorage.getItem('token') && sessionStorage.getItem('userId')) toast.error("User already logged in");
 
@@ -56,6 +60,9 @@ const Signup = ({ showSignup, setShowSignup, setShowLogin }) => {
                 toast.error("Login failed");
             }
         }
+        finally {
+            setGoogleSignupLoading(false);
+        }
     };
 
     // Added: Input change handler
@@ -76,6 +83,7 @@ const Signup = ({ showSignup, setShowSignup, setShowLogin }) => {
         // Here you'd send `user` to your backend
 
         try {
+            setSignupButtonLoading(true);
             const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/userRoutes/signup`, user, {
                 headers: {
                     "Content-Type": "application/json"
@@ -101,11 +109,15 @@ const Signup = ({ showSignup, setShowSignup, setShowLogin }) => {
                 toast.error("Signup failed");
             }
         }
+        finally{
+            setSignupButtonLoading(false);
+        }
 
     };
 
     return (
-        <div className={`max-w-[350px] mx-auto px-4 bg-white rounded-lg flex flex-col items-center justify-center py-2 min-w-[280px] z-20 transform shadow-xl  ${showSignup ? '' : 'hidden'} login-form transition-all duration-300 ease-in-out`}>
+        <div className={`max-w-[350px] mx-auto px-4 bg-white rounded-lg flex flex-col items-center justify-center py-2 min-w-[280px] z-20 transform shadow-xl relative ${showSignup ? '' : 'hidden'} login-form transition-all duration-300 ease-in-out`}>
+        {googleSignupLoading && <div className='w-full flex items-center justify-center p-2 bg-red-200 rounded-lg'>Loading...</div>}
             <div className='w-full flex items-center justify-between'>
                 <h1 className='text-2xl font-bold mt-2 text-gray-800'>Tracksy</h1>
                 <div onClick={() => setShowSignup(false)} className='text-gray-700 hover:text-gray-800'>
@@ -139,7 +151,7 @@ const Signup = ({ showSignup, setShowSignup, setShowLogin }) => {
                     className='border-2 border-gray-300 p-2 rounded-lg w-full my-2'
                 />
                 <button type='submit' className='bg-primary text-white py-2 px-4 rounded-lg w-full my-2 hover:bg-gray-800'>
-                    Sign Up
+                    {signupButtonLoading ? "Sending Mail..." : "Sign up"}
                 </button>
                 <div className='text-secondary text-center mt-2 text-sm font-normal flex justify-center items-center gap-1'>
                     Already have an account?

@@ -18,7 +18,7 @@ const Menubar = ({ openMenu, setOpenMenu }) => {
   }
 
   return (
-    <div className={`flex flex-col min-h-screen dark:border-gray-600 bg-gray-100 dark:bg-gray-800 max-w-[280px] min-w-[280px] fixed right-0 top-0 shadow-md z-50 bottom-0 ${openMenu ? 'translate-x-0' : 'translate-x-full'} transition-all duration-500 ease-in-out border-2 rounded-l-lg md:hidden py-6 px-3`}>
+    <div className={`flex flex-col min-h-screen max-h-screen dark:border-gray-600 bg-gray-100 dark:bg-gray-800 max-w-[300px] min-w-[300px] fixed right-0 top-0 shadow-md z-50 bottom-0 ${openMenu ? 'translate-x-0' : 'translate-x-full'} transition-all duration-500 ease-in-out border-2 rounded-l-lg md:hidden py-6 px-3`}>
       {/* Logo and Title  */}
       <div className='flex items-center justify-start w-full gap-2 px-2 border-b-2 dark:border-gray-600 relative'>
         <div className='bg-gradient-to-br from-violet-700 to-blue-600 rounded-full'><img src={supplier} alt="" className='w-10 h-10 rounded-full border-2' /></div>
