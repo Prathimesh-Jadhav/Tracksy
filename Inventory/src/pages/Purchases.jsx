@@ -11,43 +11,21 @@ import ForecastPeriodSelector from '../components/ForecastPeriodSelector';
 
 
 const PurchaseListPage = () => {
-  const { setSelectedOption } = React.useContext(GlobalContext);
+  const { setSelectedOption,setSelectedPeriod,purchaseList,setPurchaseList,loading,setLoading } = React.useContext(GlobalContext);
 
-  const [products, setProducts] = useState([]);
   const [allProducts, setAllProducts] = useState([]);
   const [formattedProducts, setFormattedProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(7);
   const [editingId, setEditingId] = useState(null);
   const [editValue, setEditValue] = useState('');
-  const [loading, setLoading] = useState(false);
-    const [selectedPeriod, setSelectedPeriod] = useState('next-week');
 
   useEffect(() => {
     setSelectedOption('purchases');
-
-    setTimeout(async () => {
-      try {
-        setLoading(true);
-        const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/salesForecast/${selectedPeriod}`,
-          { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } }
-        );
-        setProducts(response.data.results || []);
-        if (response.data.message) {
-          toast.success(response.data.message);
-        }
-      } catch (error) {
-        if (error.response && error.response.data && error.response.data.message) {
-          console.error('Error fetching products:', error.response.data.message);
-          toast.error(error.response.data.message);
-        }
-        console.error('Error fetching products:', error);
-      }
-    }, 100);
-  }, [selectedPeriod]);
+  }, []);
 
   useEffect(() => {
-    if (!products || products.length === 0) return;
+    if (!purchaseList || purchaseList.length === 0) return;
 
     const getAllProducts = async () => {
       try {
@@ -61,13 +39,13 @@ const PurchaseListPage = () => {
       }
     };
     getAllProducts();
-  }, [products]);
+  }, [purchaseList]);
 
   useEffect(() => {
     if (!allProducts || allProducts.length === 0) return;
 
     const finalProducts = () => {
-      const filteredProducts = products.map((product) => {
+      const filteredProducts = purchaseList.map((product) => {
         const allProduct = allProducts.find(p => p.productId === product.productId);
         if (allProduct) {
           return {
@@ -86,7 +64,7 @@ const PurchaseListPage = () => {
       setLoading(false);
     };
     finalProducts();
-  }, [allProducts, products]); // Add products as dependency
+  }, [allProducts, purchaseList]); // Add products as dependency
 
   // Pagination logic - use formattedProducts instead of products
   const totalPages = Math.ceil(formattedProducts.length / itemsPerPage);
@@ -112,7 +90,7 @@ const PurchaseListPage = () => {
     const newQty = parseInt(editValue);
     if (!isNaN(newQty) && newQty >= 0) {
       // Update products state
-      setProducts(prev => prev.map(product =>
+      setPurchaseList(prev => prev.map(product =>
         product.productId === productId ? { ...product, recommendedQty: newQty } : product
       ));
 
@@ -138,7 +116,7 @@ const PurchaseListPage = () => {
 
   // Handle delete - Fixed to use productId
   const deleteProduct = (productId) => {
-    setProducts(prev => prev.filter(product => product.productId !== productId));
+    setPurchaseList(prev => prev.filter(product => product.productId !== productId));
     setFormattedProducts(prev => prev.filter(product => product.productId !== productId));
 
     // Adjust current page if needed
@@ -276,8 +254,8 @@ const PurchaseListPage = () => {
       </div>
 
       {/* Table */}
-      <div className="bg-white border border-gray-200 rounded-lg shadow-sm overflow-x-auto min-h-[400px] max-sm:max-w-[280px] dark:bg-gray-800 dark:border-gray-700">
-        <div className="overflow-x-auto">
+      <div className="bg-white border border-gray-200 rounded-lg shadow-sm overflow-x-auto min-h-[400px] max-w-[90dvw]  dark:bg-gray-800 dark:border-gray-700">
+        <div className="overflow-x-auto max-sm:max-w-full">
           <table className="w-full">
             <thead className="bg-gray-50 border-b border-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
               <tr>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Sidebar from './components/Sidebar'
 import { Outlet, useNavigate } from 'react-router-dom'
 import Navbar from './components/Navbar'
@@ -8,6 +8,7 @@ import { useEffect } from 'react'
 
 const Layout = () => {
     const {isLogin} = React.useContext(GlobalContext);
+
     const navigate = useNavigate();
 
     useEffect(()=>{
@@ -16,6 +17,8 @@ const Layout = () => {
         navigate('/');
        }
     },[])
+
+
 
     return (
         <div className='flex dark:bg-black'>
