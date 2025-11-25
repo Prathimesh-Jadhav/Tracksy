@@ -52,7 +52,7 @@ const PurchaseListPage = () => {
             ...product,
             name: allProduct.name,
             costPrice: allProduct.costPrice,
-            recommendedQty: product.recommendedQty || 0,
+            recommendedQty: Math.max(Number(product.recommendedQty),0) || 0,
             totalAmount: Number(product.recommendedQty * allProduct.costPrice)
           };
         }
